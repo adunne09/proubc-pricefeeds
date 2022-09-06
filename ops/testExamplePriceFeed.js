@@ -1,8 +1,7 @@
 const { Ident, identClientFactory, nchainClientFactory } = require('provide-js')
 const { faker } = require('@faker-js/faker')
 
-// const artifact = require('../out/AggregatorV3Interface.sol/AggregatorV3Interface.json')
-const goerliAbi = require('../goerli.abi.json')
+const priceFeedABI = require('../example-price-feed.abi.json')
 
 const userParams = {
   first_name: faker.name.firstName(),
@@ -12,7 +11,7 @@ const userParams = {
 }
 
 const organizationParams = {
-  name: faker.company.companyName(),
+  name: faker.company.name(),
 }
 
 async function main() {
@@ -55,7 +54,7 @@ async function main() {
 
     // create price feed contract
     const priceFeedContract = await nchain.createContract({
-      address: '0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e', // eth/usd pair https://docs.chain.link/docs/consuming-data-feeds/
+      address: '0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e', // eth/usd pair -- see https://docs.chain.link/docs/consuming-data-feeds/ & https://goerli.etherscan.io/address/0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e#code
       name: 'ETH/USD',
       network_id: '1b16996e-3595-4985-816c-043345d22f8c', // goerli testnet nchain id
       params: {
@@ -63,7 +62,7 @@ async function main() {
         wallet_id: organizationWallet.id,
         compiled_artifact: {
           name: 'EACAggregatorProxy',
-          abi: goerliAbi,
+          abi: priceFeedABI,
         },
       },
       type: 'price-feed',
@@ -83,5 +82,3 @@ async function main() {
 }
 
 main()
-
-// create contract
