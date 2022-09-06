@@ -1,0 +1,17 @@
+{
+  "name": "proubc-pricefeeds",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "^7.5.0",
+    "axios": "^0.27.2",
+    "provide-js": "^1.9.4"
+  }
+}
