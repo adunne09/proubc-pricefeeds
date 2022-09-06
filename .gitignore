@@ -5,7 +5,3 @@ dist-ssr
 *.local
 
 .vscode/
-
-# forge
-cache/
-# out/
