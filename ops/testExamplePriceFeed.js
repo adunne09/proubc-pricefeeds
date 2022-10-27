@@ -44,7 +44,7 @@ async function main() {
     const nchain = nchainClientFactory(
       organizationToken.accessToken,
       'http',
-      'localhost:8084'
+      'localhost:8085'
     )
 
     // organization wallet

@@ -22,6 +22,8 @@ services:
     ports:
       - 5432:5432
     restart: always
+    profiles:
+      - core
 
   redis:
     image: redis
@@ -38,9 +40,11 @@ services:
     ports:
       - 6379:6379
     restart: always
+    profiles:
+      - core
 
   nats:
-    image: provide/nats-server:2.5.0-PRVD
+    image: provide/nats-server:2.7.2-PRVD
     container_name: provide-nats
     command:
       [
@@ -85,6 +89,8 @@ services:
     restart: always
     volumes:
       - ./ops/await_tcp.sh:/usr/local/bin/await_tcp.sh:cached
+    profiles:
+      - core
 
   ident:
     image: provide/ident
@@ -123,6 +129,8 @@ services:
     ports:
       - 8081:8080
     restart: always
+    profiles:
+      - core
 
   ident-consumer:
     image: provide/ident
@@ -162,6 +170,8 @@ services:
     networks:
       - provide
     restart: always
+    profiles:
+      - core
 
   vault:
     image: provide/vault
@@ -197,6 +207,8 @@ services:
     ports:
       - 8082:8080
     restart: always
+    profiles:
+      - core
 
   privacy:
     image: provide/privacy
@@ -313,8 +325,9 @@ services:
       - REQUEST_TIMEOUT=20
       - RPC_TIMEOUT=10
       - EVM_SYNC_TIMEOUT=10
-      - ENABLED_L1_NETWORK_IDS=66d44f30-9092-4182-a3c4-bc02736d6ae5,8d31bf48-df6b-4a71-9d7c-3cb291111e27
-      - ENABLED_L2_NETWORK_IDS=4251b6fd-c98d-4017-87a3-d691a77a52a7
+      - ENABLED_L1_NETWORK_IDS=
+      - ENABLED_L2_NETWORK_IDS=
+      - ENABLED_L3_NETWORK_IDS=
     healthcheck:
       test: ['CMD', 'curl', '-f', 'http://nchain:8080/status']
       interval: 1m
@@ -325,7 +338,7 @@ services:
     networks:
       - provide
     ports:
-      - 8084:8080
+      - 8085:8080
     restart: always
     profiles:
       - core
@@ -363,6 +376,9 @@ services:
       - REQUEST_TIMEOUT=20
       - RPC_TIMEOUT=10
       - EVM_SYNC_TIMEOUT=10
+      - ENABLED_L1_NETWORK_IDS=
+      - ENABLED_L2_NETWORK_IDS=
+      - ENABLED_L3_NETWORK_IDS=
     healthcheck:
       test: ['CMD', 'curl', '-f', 'http://nchain-consumer:8080/status'] # FIXME
       interval: 1m
@@ -408,6 +424,9 @@ services:
       - REQUEST_TIMEOUT=20
       - RPC_TIMEOUT=10
       - EVM_SYNC_TIMEOUT=10
+      - ENABLED_L1_NETWORK_IDS=
+      - ENABLED_L2_NETWORK_IDS=
+      - ENABLED_L3_NETWORK_IDS=
     healthcheck:
       test: ['CMD', 'curl', '-f', 'http://statsdaemon:8080/status']
       interval: 1m
@@ -464,7 +483,7 @@ services:
       - baseline
 
   prvd-nats:
-    image: provide/nats-server:2.5.0-PRVD
+    image: provide/nats-server:2.7.2-PRVD
     container_name: nats-local
     command:
       [
@@ -554,7 +573,7 @@ services:
       - NATS_CLIENT_PREFIX=baseline
       - NATS_URL=nats://prvd-nats:4224
       - NATS_JETSTREAM_URL=nats://prvd-nats:4224
-      - NCHAIN_API_HOST=host.docker.internal:8084
+      - NCHAIN_API_HOST=host.docker.internal:8085
       - NCHAIN_API_SCHEME=http
       - NCHAIN_BASELINE_NETWORK_ID=
       - PRIVACY_API_HOST=host.docker.internal:8083
@@ -575,6 +594,9 @@ services:
       - ELASTICSEARCH_API_SCHEME=https
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=3l4s71c
+      - SERVICENOW_LIST_SCHEMAS_API_PATH=
+      - SERVICENOW_SCHEMA_DETAILS_API_PATH=
+      - SERVICENOW_HEALTHCHECK_API_PATH=
     healthcheck:
       test: ['CMD', 'curl', '-f', 'http://prvd-baseline:8080/status']
       interval: 1m
@@ -585,7 +607,7 @@ services:
     networks:
       - prvd-baseline
     ports:
-      - 8085:8080
+      - 8086:8080
     restart: always
     profiles:
       - baseline
@@ -612,7 +634,7 @@ services:
       - NATS_CLIENT_PREFIX=baseline
       - NATS_URL=nats://prvd-nats:4224
       - NATS_JETSTREAM_URL=nats://prvd-nats:4224
-      - NCHAIN_API_HOST=host.docker.internal:8084
+      - NCHAIN_API_HOST=host.docker.internal:8085
       - NCHAIN_API_SCHEME=http
       - NCHAIN_BASELINE_NETWORK_ID=
       - PRIVACY_API_HOST=host.docker.internal:8083
@@ -636,6 +658,9 @@ services:
       - ELASTICSEARCH_API_SCHEME=https
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=3l4s71c
+      - SERVICENOW_LIST_SCHEMAS_API_PATH=
+      - SERVICENOW_SCHEMA_DETAILS_API_PATH=
+      - SERVICENOW_HEALTHCHECK_API_PATH=
     healthcheck:
       test: ['CMD', 'curl', '-f', 'http://prvd-baseline:8080/status']
       interval: 1m
