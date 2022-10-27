@@ -54,9 +54,9 @@ async function main() {
 
     // create price feed contract
     const priceFeedContract = await nchain.createContract({
-      address: '0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e', // eth/usd pair -- see https://docs.chain.link/docs/consuming-data-feeds/ & https://goerli.etherscan.io/address/0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e#code
+      address: '0x0715A7794a1dc8e42615F059dD6e406A6594651A', // eth/usd pair -- see https://docs.chain.link/docs/consuming-data-feeds/ & https://docs.chain.link/docs/data-feeds/price-feeds/addresses/?network=polygon#Mumbai%20Testnet
       name: 'ETH/USD',
-      network_id: '1b16996e-3595-4985-816c-043345d22f8c', // goerli testnet nchain id
+      network_id: '4251b6fd-c98d-4017-87a3-d691a77a52a7', // polygon mumbai testnet nchain id
       params: {
         argv: [],
         wallet_id: organizationWallet.id,
