@@ -75,7 +75,13 @@ async function main() {
       params: [],
       value: 0,
     })
-    console.log('price feed result:', priceResult)
+
+    const [roundID, price, startedAt, timeStamp, answeredInRound] =
+      priceResult['response']
+    console.log(
+      'current price of ethereum (rounded to the nearest dollar):',
+      Math.floor(price / 100000000)
+    )
   } catch (e) {
     console.error('failed to use chainlink price feed;', e)
   }
