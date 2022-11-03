@@ -74,7 +74,7 @@ async function main() {
       params: [],
       value: 0,
     })
-    console.log('decimals:', decimalsResult['response'])
+    const decimals = decimalsResult['response']
 
     // execute contract method
     const priceResult = await nchain.executeContract(priceFeedContract.id, {
@@ -86,9 +86,16 @@ async function main() {
 
     const [roundID, price, startedAt, timeStamp, answeredInRound] =
       priceResult['response']
+
+    const splitStr = price.toString().split('')
+    splitStr.splice(splitStr.length - decimals, 0, '.')
+    const parsedPrice = +splitStr.join('')
+
     console.log(
-      'current price of ethereum (rounded to the nearest dollar):',
-      Math.floor(price / 100000000)
+      'current price of ethereum:',
+      +parsedPrice,
+      'decimals:',
+      decimals
     )
   } catch (e) {
     console.error('failed to use chainlink price feed;', e)
