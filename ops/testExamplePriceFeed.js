@@ -68,6 +68,14 @@ async function main() {
       type: 'price-feed',
     })
 
+    const decimalsResult = await nchain.executeContract(priceFeedContract.id, {
+      wallet_id: organizationWallet.id,
+      method: 'decimals',
+      params: [],
+      value: 0,
+    })
+    console.log('decimals:', decimalsResult['response'])
+
     // execute contract method
     const priceResult = await nchain.executeContract(priceFeedContract.id, {
       wallet_id: organizationWallet.id,
